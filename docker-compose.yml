@@ -1,0 +1,13 @@
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  app:
+    build: .
+    ports:
+      - "8888:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - app-network

@@ -1,0 +1,37 @@
+{% extends "partials/base.html.twig" %}
+
+{% block title %}Registreren | Winkeltool{% endblock %}
+
+{% block content %}
+<section class="form-card narrow">
+    <h1>Registreren</h1>
+    <p>Maak een account om je eigen winkelvoorraad te beheren.</p>
+
+    {% if errors is defined and errors %}
+        <div class="alert error" role="alert">
+            <strong>Registreren is niet gelukt.</strong>
+            <ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        </div>
+    {% endif %}
+
+    <form method="post" action="/register" novalidate>
+        {{ csrf_input() }}
+        <label for="name">Naam</label>
+        <input id="name" name="name" value="{{ name ?? '' }}" autocomplete="name" required>
+
+        <label for="username">Gebruikersnaam</label>
+        <input id="username" name="username" value="{{ username ?? '' }}" autocomplete="username" minlength="3" maxlength="30" required>
+        <small>3–30 letters, cijfers, punten, streepjes of underscores.</small>
+
+        <label for="password">Wachtwoord</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <small>Gebruik minimaal 8 tekens.</small>
+
+        <label for="confirm_password">Herhaal wachtwoord</label>
+        <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required>
+
+        <button class="button full" type="submit">Account maken</button>
+    </form>
+    <p class="form-note">Al een account? <a href="/login">Log hier in</a>.</p>
+</section>
+{% endblock %}

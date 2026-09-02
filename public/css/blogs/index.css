@@ -1,0 +1,83 @@
+/* ===== BLOG INDEX (LIST) ===== */
+
+.blog-posts {
+  width: 1200px;
+  height: 400px;
+  margin-left: 100px;
+  margin-top: var(--block-gap);
+  display: block;
+  border-radius: var(--radius-lg);
+  background-color: var(--boxcolor);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-color: rgb(0, 0, 185) rgb(98, 98, 255);
+  white-space: nowrap;
+}
+
+.blog-posts a {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: var(--spacing-lg);
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-posts a:first-child {
+  margin-left: var(--spacing-lg);
+}
+
+.blog-posts a:not(:last-child) {
+  margin-right: var(--spacing-lg);
+}
+
+.blog-posts article {
+  background-color: rgb(29, 29, 157);
+  border-radius: var(--radius-lg);
+  width: 300px;
+  height: 360px;
+  color: var(--white);
+  text-align: center;
+  white-space: normal;
+  transition: background-color 0.2s ease;
+}
+
+.blog-posts article:hover {
+  background-color: #941313;
+}
+
+.titel {
+  font-size: 1.75rem;
+  margin-top: 0;
+}
+
+.blog-pic {
+  margin: auto;
+  height: auto;
+  width: 260px;
+  border-radius: var(--radius-lg);
+}
+
+/* New blog button */
+.blog-index-actions {
+  width: 1200px;
+  margin: var(--block-gap) 0 0 100px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.new-blog-button {
+  width: 200px;
+  position: relative;
+  font-size: 1.75rem;
+}
+
+/* No blogs message */
+.geen-blogs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.25rem;
+  white-space: normal;
+  text-align: center;
+}

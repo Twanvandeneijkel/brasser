@@ -1,0 +1,17 @@
+.git
+.idea
+
+# Composer/vendor artifacts
+vendor/
+.deptrac.cache
+
+# Local environment and runtime data
+.env
+cache/
+*.sqlite
+
+# Editor/backups/docs
+*.bkp
+~*
+README.html
+*.pdf

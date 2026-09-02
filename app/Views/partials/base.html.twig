@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Winkeltool{% endblock %}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/">Winkeltool</a>
+    <nav aria-label="Hoofdnavigatie">
+        <a href="/">Start</a>
+        {% if user is defined and user %}
+            <a href="/stock">Voorraad</a>
+            <a href="/nutritional-values">Voedingswaarden</a>
+            <form class="nav-form" method="post" action="/logout">
+                {{ csrf_input() }}
+                <button class="link-button" type="submit">Uitloggen</button>
+            </form>
+        {% else %}
+            <a href="/login">Inloggen</a>
+            <a href="/register">Registreren</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="container">
+    {% if flash.success is defined %}<div class="alert success" role="status">{{ flash.success }}</div>{% endif %}
+    {% if flash.error is defined %}<div class="alert error" role="alert">{{ flash.error }}</div>{% endif %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">Eenvoudig voorraad- en voedingswaardenbeheer.</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

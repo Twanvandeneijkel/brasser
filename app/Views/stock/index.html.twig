@@ -1,0 +1,76 @@
+{% extends "partials/base.html.twig" %}
+
+{% block title %}Voorraad | Winkeltool{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div><p class="eyebrow">Live winkelvoorraad</p><h1>Producten en voorraad</h1></div>
+    <p>Ieder gewicht is een eigen voorraadregel. Pas hier aan hoeveel producten live in het winkelvak liggen.</p>
+</div>
+
+<section class="form-card">
+    <h2>Product aan database toevoegen</h2>
+    <p>Voer één productnaam in met alle beschikbare gewichten. Dubbele gewichten worden automatisch samengevoegd.</p>
+    {% if errors is defined and errors %}
+        <div class="alert error" role="alert"><ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul></div>
+    {% endif %}
+    <form class="product-form" method="post" action="/stock/products" novalidate>
+        {{ csrf_input() }}
+        <div>
+            <label for="name">Productnaam</label>
+            <input id="name" name="name" value="{{ product_form.name }}" maxlength="100" placeholder="Bijvoorbeeld: Volkoren tarwemeel" required>
+        </div>
+        <div>
+            <label for="weights">Mogelijke gewichten</label>
+            <input id="weights" name="weights" value="{{ product_form.weights }}" placeholder="500g, 1kg, 2.5kg" required>
+            <small>Scheid gewichten met komma’s. Gram en kilogram zijn mogelijk.</small>
+        </div>
+        <button class="button" type="submit">Product toevoegen</button>
+    </form>
+</section>
+
+<section>
+    <div class="section-heading">
+        <div><h2>Productlijst uit de database</h2><p>{{ items|length }} gewichtvarianten</p></div>
+    </div>
+    {% if items is empty %}
+        <div class="empty-state compact"><p>Nog geen producten in de database.</p></div>
+    {% else %}
+        <div class="stock-list">
+        {% for row in items %}
+            <article class="stock-row">
+                <div class="stock-identity">
+                    <p class="stock-name">{{ row.item.product_name }}</p>
+                    <span class="weight-badge">{{ row.weight_label }}</span>
+                    <small>Laatst bijgewerkt: {{ row.item.updated_at }}</small>
+                </div>
+
+                <form class="stock-update-form" method="post" action="/stock/{{ row.item.id }}/update">
+                    {{ csrf_input() }}
+                    <div>
+                        <label for="current_stock_{{ row.item.id }}">Live in winkel</label>
+                        <input id="current_stock_{{ row.item.id }}" name="current_stock" type="number" min="0" step="1" value="{{ row.item.current_stock }}" required>
+                    </div>
+                    <div>
+                        <label for="shelf_capacity_{{ row.item.id }}">Vakcapaciteit</label>
+                        <input id="shelf_capacity_{{ row.item.id }}" name="shelf_capacity" type="number" min="1" step="1" value="{{ row.item.shelf_capacity }}" required>
+                    </div>
+                    <div>
+                        <label for="units_per_batch_{{ row.item.id }}">Per productieronde</label>
+                        <input id="units_per_batch_{{ row.item.id }}" name="units_per_batch" type="number" min="1" step="1" value="{{ row.item.units_per_batch }}" required>
+                    </div>
+                    <button class="button small" type="submit">Voorraad opslaan</button>
+                </form>
+
+                <dl class="stock-advice">
+                    <div><dt>Exact nodig</dt><dd>{{ row.advice.needed_units }}</dd></div>
+                    <div><dt>Rondes</dt><dd>{{ row.advice.batches }}</dd></div>
+                    <div><dt>Te maken</dt><dd>{{ row.advice.production_units }}</dd></div>
+                    <div><dt>Extra</dt><dd>{{ row.advice.overflow }}</dd></div>
+                </dl>
+            </article>
+        {% endfor %}
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

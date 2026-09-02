@@ -1,0 +1,21 @@
+.idea
+
+# Cache for twig
+cache/
+
+# Composer stuff
+vendor/
+composer.lock
+.deptrac.cache
+.phpunit.cache/
+.phpunit.result.cache
+coverage/
+
+# User level
+.env
+*.sqlite
+
+*.bkp
+~*
+README.html
+*.pdf

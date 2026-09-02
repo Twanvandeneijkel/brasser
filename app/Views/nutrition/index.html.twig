@@ -1,0 +1,68 @@
+{% extends "partials/base.html.twig" %}
+
+{% block title %}Voedingswaarden | Winkeltool{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div><p class="eyebrow">Calculator</p><h1>Voedingswaarden</h1></div>
+    <p>Energie wordt berekend met vet × 9 + koolhydraten × 4 + eiwit × 4 kcal.</p>
+</div>
+
+<section class="form-card">
+    <h2>Waarden per 100 gram</h2>
+    {% if errors is defined and errors %}
+        <div class="alert error" role="alert"><ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul></div>
+    {% endif %}
+    <form class="form-grid" method="post" action="/nutritional-values" novalidate>
+        {{ csrf_input() }}
+        <div class="wide"><label for="product_name">Productnaam</label><input id="product_name" name="product_name" value="{{ form.product_name }}" required></div>
+        <div><label for="portion_grams">Portie (gram)</label><input id="portion_grams" name="portion_grams" type="number" min="0.1" step="0.1" value="{{ form.portion_grams }}" required></div>
+        <div><label for="fat">Vetten (g)</label><input id="fat" name="fat" type="number" min="0" step="0.1" value="{{ form.fat }}" required></div>
+        <div><label for="saturates">Verzadigd (g)</label><input id="saturates" name="saturates" type="number" min="0" step="0.1" value="{{ form.saturates }}" required></div>
+        <div><label for="carbohydrates">Koolhydraten (g)</label><input id="carbohydrates" name="carbohydrates" type="number" min="0" step="0.1" value="{{ form.carbohydrates }}" required></div>
+        <div><label for="sugars">Suikers (g)</label><input id="sugars" name="sugars" type="number" min="0" step="0.1" value="{{ form.sugars }}" required></div>
+        <div><label for="protein">Eiwitten (g)</label><input id="protein" name="protein" type="number" min="0" step="0.1" value="{{ form.protein }}" required></div>
+        <div><label for="salt">Zout (g)</label><input id="salt" name="salt" type="number" min="0" step="0.01" value="{{ form.salt }}" required></div>
+        <div class="wide"><button class="button" type="submit">Berekenen</button></div>
+    </form>
+</section>
+
+{% if result is defined and result %}
+<section class="result-grid">
+    <div class="card">
+        <h2>Uitkomst per portie</h2>
+        <dl class="results">
+            <div><dt>Energie</dt><dd>{{ result.portion_energy_kj }} kJ / {{ result.portion_energy_kcal }} kcal</dd></div>
+            <div><dt>Vetten</dt><dd>{{ result.portion_fat }} g</dd></div>
+            <div><dt>Koolhydraten</dt><dd>{{ result.portion_carbohydrates }} g</dd></div>
+            <div><dt>Eiwitten</dt><dd>{{ result.portion_protein }} g</dd></div>
+            <div><dt>Zout</dt><dd>{{ result.portion_salt }} g</dd></div>
+        </dl>
+    </div>
+    <div class="card">
+        <div class="copy-heading"><h2>Kopieerbare tekst</h2><button class="button small" id="copy-label" type="button">Kopiëren</button></div>
+        <textarea id="nutrition-label" class="label-output" readonly>{{ result.label }}</textarea>
+        <p id="copy-status" class="form-note" aria-live="polite"></p>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const copyButton = document.getElementById('copy-label');
+    if (copyButton) {
+        copyButton.addEventListener('click', async () => {
+            const output = document.getElementById('nutrition-label');
+            const status = document.getElementById('copy-status');
+            try {
+                await navigator.clipboard.writeText(output.value);
+                status.textContent = 'Tekst gekopieerd.';
+            } catch (error) {
+                output.select();
+                status.textContent = 'Selecteer de tekst en kopieer deze handmatig.';
+            }
+        });
+    }
+</script>
+{% endblock %}

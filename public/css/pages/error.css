@@ -1,0 +1,29 @@
+/* ===== ERROR PAGES ===== */
+
+.error-page {
+  max-width: 720px;
+  min-height: 55vh;
+  margin: 0 auto;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--spacing-md);
+}
+
+.error-code {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.error-page h1,
+.error-page p {
+  margin: 0;
+}
+
+.error-page p:not(.error-code) {
+  max-width: 34rem;
+  color: var(--text-muted);
+}

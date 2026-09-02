@@ -1,0 +1,141 @@
+/* ===== PROFILE PAGES ===== */
+
+/* Full-width header box */
+.profiel-box {
+  grid-column: 1 / -1;
+  background-color: var(--boxcolor);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-sizing: border-box;
+}
+
+/* Profile grid wrapper */
+.profile-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--block-gap);
+}
+
+/* Profile grid sections */
+.mijn-gezicht,
+.paragraaf-info,
+.relevante-links,
+.ik-verhaal,
+.foto-gallerij,
+.kenmerken {
+  background-color: var(--boxcolor);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-sizing: border-box;
+  transition: transform 0.2s ease;
+}
+
+.mijn-gezicht:hover,
+.paragraaf-info:hover,
+.relevante-links:hover,
+.ik-verhaal:hover,
+.foto-gallerij:hover,
+.kenmerken:hover {
+  transform: translateY(-2px);
+}
+
+/* Mijn gezicht section */
+.mijn-gezicht {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resize-mijngezicht {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+}
+
+/* Relevante links */
+.relevante-links h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+}
+
+.relevante-links ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.relevante-links li {
+  margin-top: var(--spacing-lg);
+  transition: background-color 0.2s ease;
+}
+
+.relevante-links li:hover {
+  background-color: red;
+  padding: 2px 6px;
+}
+
+.relevante-links a {
+  text-decoration: none;
+  color: var(--accentyellow);
+}
+
+/* Foto gallerij */
+.foto-gallerij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+.foto-gallerij h4 {
+  width: 100%;
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.foto-gallerij img {
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+}
+
+.dipuit { width: 120px; height: auto; }
+.hond   { width: 100px; height: auto; }
+.molen  { width: 100px; height: auto; }
+.paard  { width: 200px; height: auto; }
+.rot    { width: 160px; height: auto; }
+.ski    { width: 100px; height: auto; }
+
+/* Kenmerken */
+.resize-kenmerken {
+  height: 160px;
+  width: auto;
+  border-radius: var(--radius-lg);
+  display: block;
+  margin-top: var(--spacing-md);
+}
+
+/* Edit button for profile */
+.edit-button {
+  width: 200px;
+  margin-top: var(--block-gap);
+}
+
+.profile-edit-actions {
+  display: flex;
+  gap: var(--block-gap);
+  align-items: center;
+  margin-top: var(--block-gap);
+}
+
+.profile-edit-actions .back-button,
+.profile-edit-actions .save-button {
+  margin-top: 0;
+}
+
+/* Back/save buttons for profile edit */
+.back-button,
+.save-button {
+  width: 200px;
+  margin-top: var(--block-gap);
+}
