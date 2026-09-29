@@ -1,21 +1,38 @@
-.idea
-
-# Cache for twig
-cache/
-
-# Composer stuff
+node_modules
 vendor/
 composer.lock
-.deptrac.cache
+.idea/
+.vscode/
 .phpunit.cache/
 .phpunit.result.cache
-coverage/
+.deptrac.cache
+data/*.db
+data/*.db-*
+database.sqlite
+database/*.sqlite
+src/generated/
+Excel/*.tmp-*
+Excel/outputs/
+Excel/.codex-workbook-inspect/
 
-# User level
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
 .env
-*.sqlite
+.env.*
+!.env.example
+!.env.test
 
-*.bkp
-~*
-README.html
-*.pdf
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

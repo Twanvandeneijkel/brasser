@@ -6,25 +6,28 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  phpstan-phpcs:
+  validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          php-version: '8.2'
-          extensions: mbstring, pdo, pdo_sqlite
-          coverage: none
+          node-version: 24
+          cache: npm
 
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Run PHPStan (level 8)
-        run: vendor/bin/phpstan analyse --level=8 --configuration=phpstan.neon
+      - name: Generate Prisma client
+        run: npm run db:generate
 
-      - name: Run PHPCS (PSR-12)
-        run: vendor/bin/phpcs --standard=phpcs.xml --extensions=php app src
+      - name: Validate application
+        run: npm run validate
